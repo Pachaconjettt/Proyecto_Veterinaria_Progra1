@@ -20,7 +20,7 @@ void Doctor::setNombre(string* nombre) {
 void Doctor::setId(string* id) { 
 	if (this->id) {
 	delete this->id;
-	}
+	}	
 	this->id = id;
 }
 void Doctor::setEspecialidad(Especialidad* especi) { 

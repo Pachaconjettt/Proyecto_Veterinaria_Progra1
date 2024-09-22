@@ -1,22 +1,21 @@
 #pragma once
 #include "Propietario.h"
-#include "Doctor.h"
+
+class Propietario; 
+
 class Mascota
 {
 private: 
 	string* nombre; 
 	string* animal; 
-	Propietario* duennio; 
-	//Doctor* doc;
+	Propietario* duennio;
 
 public: 
 	Mascota();
-	Mascota(string*, string*, Propietario*/*, Doctor **/);
+	Mascota(string*, string*, Propietario*);
 	void setNombre(string *);
 	void setAnimal(string*);
 	void setDuennio(Propietario*); 
-	/*void setDoctor(Doctor *);	
-	Doctor * getDoctor(); */
 	string* getNombre();
 	string* getAnimal();
 	Propietario* getPropietario();

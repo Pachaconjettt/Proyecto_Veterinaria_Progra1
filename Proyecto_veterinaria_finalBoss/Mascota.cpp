@@ -4,11 +4,10 @@ Mascota::Mascota(){
 	this->animal = new string("indef");
 	this->duennio = new Propietario();
 }
-Mascota::Mascota(string* nombre, string* animal, Propietario* nuevo/*, Doctor * doc*/){
+Mascota::Mascota(string* nombre, string* animal, Propietario* nuevo){
 	this->setNombre(nombre); 
 	this->setAnimal(animal);
 	this->setDuennio(nuevo);
-	//this->setDoctor(doc);
 }
 void Mascota::setNombre(string* nombre){
 	if (this->nombre) {
@@ -28,13 +27,6 @@ void Mascota::setDuennio(Propietario* propietario){
 }
 	this->duennio = propietario;
 }
-//void Mascota::setDoctor(Doctor* doc) {
-//	if (this->doc) {
-//		delete this->doc;
-//	}
-//	this->doc = doc;
-//}
-//Doctor* Mascota::getDoctor() { return this->doc; }
 string* Mascota::getNombre() { return this->nombre; }
 string* Mascota::getAnimal() { return this->animal; }
 Propietario* Mascota::getPropietario() { return this->duennio; }

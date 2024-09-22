@@ -4,7 +4,7 @@
 #include "DoctorLista.h";
 #include "PropietarioLista.h";
 #include "MascotaLista.h";
-#include "Cita.h"
+
 class Interfaz
 {
 private:
@@ -12,7 +12,6 @@ private:
 	DoctorLista* DocLista; 
 	PropietarioLista* PropiLista; 
 	MascotaLista* MascLista;
-	Cita* Citas; 
 public:
 	Interfaz();
 	void Menu();
