@@ -1,6 +1,6 @@
 #include "Mascota.h"
 Mascota::Mascota(){
-	this->nombre = new string("indef");
+	this->nombre = new string("Disponible");
 	this->animal = new string("indef");
 	this->duennio = new Propietario();
 }

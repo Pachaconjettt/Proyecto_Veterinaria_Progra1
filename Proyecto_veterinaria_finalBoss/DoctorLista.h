@@ -17,7 +17,10 @@ public:
 	Doctor* buscarDoctor(string*);
 	bool AgregarDoctor(Doctor* );
 	void ingresarHoraCita(int vec[], string * , Doctor *);
+	void eliminarCita(int dia, int hora, string*, Doctor*); 
+	string* BuscarNombreEspecifico(string*);
 	string* ListaDoctoresEspecialidad(Especialidad*); 
+	string* ListaDoctoresXIdCita(string * );
 	string* RetornoDoctor();
 	string* HorarioDeDoctor(Doctor *); 
 	virtual ~DoctorLista();

@@ -2,6 +2,9 @@
 #include "Especialidad.h"
 #include "Matrix.h"
 #include "Mascota.h"
+
+class Matrix;
+
 class Doctor
 {
 private: 
@@ -18,8 +21,10 @@ public:
 	string* getNombre(); 
 	string* getID();
 	Especialidad* getEspecialidad();
-	void ingresarCita(int vec[], string paciente); 
-	void eliminarCita(string paciente);
+	Matrix* getMatrix();
+	void ingresarCita(int vec[], string * paciente); 
+	void eliminarCita(int dia, int hora, string * paciente);
+	string* BuscarNombreEspecifico(string*);
 	string* pintarMatrizDoctor(); 
 	string * toString(); 
 	virtual ~Doctor();

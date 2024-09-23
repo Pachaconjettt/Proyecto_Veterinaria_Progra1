@@ -129,7 +129,7 @@ void Interfaz::opcion3_1(){
 	cin >> *nombre; 
 	cout << "Ingrese el id del duennio :" << endl;
 	cin >> *id;
-	Propietario* due = new Propietario(new string(*nombre), new string(*id), new Doctor());
+	Propietario* due = new Propietario(new string(*nombre), new string(*id));
 	PropiLista->AgregarPropietario(due);
 	delete nombre; 
 	delete id;
@@ -231,15 +231,12 @@ void Interfaz::opcion1_2() {
 	cout << endl;
 	cout << *(DocLista->HorarioDeDoctor(DocLista->buscarDoctor(IdDoctor))) << endl;
 	cout << "ELIGA UNA HORA Y UN DIA DISPONIBLE PARA LA CITA :" << endl;
-	cout << "Ingrese la hora (8-19): " << endl;
+	cout << endl; 
+	cout << "Ingrese la hora (8-19 , formato 24hrs ): " << endl;
 	cin >> vec[0];
 	cout << "Ingrese el dia (0-5, donde 0 es Lunes y 5 es sabado) :" << endl;
 	cin >> vec[1];
-	DocLista->ingresarHoraCita(vec, nombre, DocLista->buscarDoctor(IdDoctor));
-
-	// Agregar el doctor al propietario específico
-	PropiLista->AgregarDoctorAPropietario(DocLista->buscarDoctor(IdDoctor));
-
+	DocLista->ingresarHoraCita(vec, MascLista->buscarMascota(nombre)->getNombre(), DocLista->buscarDoctor(IdDoctor));
 	cout << endl;
 	cout << *(DocLista->HorarioDeDoctor(DocLista->buscarDoctor(IdDoctor))) << endl;
 	cin.get();
@@ -255,51 +252,64 @@ void Interfaz::opcion1_2() {
 void Interfaz::opcion2_2() {
 	string* idDuennio = new string("indef");
 	string* idDoctor = new string(" ");
+	string* masct = new string(" ");
+	int dia;
+	int hora;
 	cout << "-------------------CANCELAR CITA----------------------" << endl;
 	cout << "Ingrese el id del duennio :" << endl;
 	cin >> *idDuennio;
-	Propietario* propietario = PropiLista->BuscarPropietario(idDuennio);
-
-	if (propietario == nullptr) {
-		cout << "Propietario no encontrado." << endl;
-		delete idDuennio;
-		delete idDoctor;
-		return;
-	}
-
-	cout << "Doctores con los que tiene cita sus mascotas :" << endl;
-	cout << *(PropiLista->DocCitasPorId(propietario));
-	cout << "Ingrese el id del doctor con el que desea cancelar la cita:" << endl;
-	cin >> *idDoctor;
-
-	Doctor* doctor = DocLista->buscarDoctor(idDoctor);
-	if (doctor == nullptr) {
-		cout << "Doctor no encontrado." << endl;
-		delete idDuennio;
-		delete idDoctor;
-		return;
-	}
-
-	cout << "Ingrese el nombre de la mascota para cancelar la cita:" << endl;
-	string* nombreMascota = new string(" ");
-	cin >> *nombreMascota;
-
-	doctor->eliminarCita(*nombreMascota);
-	cout << "Cita cancelada exitosamente." << endl;
-
-	delete idDuennio;
-	delete idDoctor;
-	delete nombreMascota;
+	cout << "Doctores con los que tiene cita :" << endl; 
+	cout << *(DocLista->ListaDoctoresXIdCita(idDuennio)) << endl; 
+	cout << "Ingrese el id doctor que quiere cancelar la cita : " << endl; 
+	cin >> *idDoctor; 
+	cout << *(DocLista->HorarioDeDoctor(DocLista->buscarDoctor(idDoctor))) << endl;
+	cout << "Digite el nombre de la mascota : " << endl;
+	cin >> *masct;
+	cout << "Ingrese el dia que quiere quitar la mascota(Recordar que Lunes es 0 y Domingo es 5) :" << endl;
+	cin >> dia; 
+	cout << "Ingrese la hora del dia que quiere quitar (Formato 24hrs ): " << endl;
+	cin >> hora; 
+	DocLista->eliminarCita(dia, hora, masct, DocLista->buscarDoctor(idDoctor));
+	cout << "Horario actualizado del doctor :" << endl; 
+	cout << endl;
+	cout << *(DocLista->HorarioDeDoctor(DocLista->buscarDoctor(idDoctor))) << endl;
 	cin.get();
 	cin.get();
 }
 
 void Interfaz::opcion3_2() {
-	cout << "En construccion" << endl;
+	string* nombre = new string(" ");
+	cout << "---------------- MOSTRAR CALENDARIO DE CITAS POR DOCTOR -------------------" << endl;
+	cout << "Ingrese el id del doctor para saber el calendario de este mismo :" << endl;
+	cin >> *nombre; 
+	cout << "Horario del doctor solicitado :" << endl;
+	cout << endl;
+	cout << *(DocLista->HorarioDeDoctor(DocLista->buscarDoctor(nombre))) << endl;
+	cin.get();
+	cin.get();
 }
 void Interfaz::opcion4_2() {
-	cout << "Ya le dije! En construccion " << endl;
+	string* nombre = new string(" ");
+	string* mascotaName = new string(" ");
+	cout << "----------------- MOSTRAR CITAS POR PROPIETARIO ---------------" << endl;
+	cout << "Ingrese el id del propietario :" << endl;
+	cin >> *nombre;
+	cout << "Lista de mascotas del propietario :" << endl;
+	cout << endl;
+	cout << *MascLista->ListasDeMascotaDe(PropiLista->BuscarPropietario(nombre)) << endl;
+	cout << "Escriba el nombre de la mascota( A como esta en el sistema es decir sin agregar mayusculas o algun cambio pequenio) :" << endl;
+	cin >> *mascotaName;
+	cout << endl;
+	cout << "Citas que tiene la mascota :" << endl;
+	cout << endl; 
+	cout << *DocLista->BuscarNombreEspecifico(mascotaName) << endl; 
+
+	delete nombre;
+	delete mascotaName;
+	cin.get();
+	cin.get();
 }
+
 void Interfaz::SubmenuBusqueda() {
 	int opcionSubmenu3 = 1; 
 	while (opcionSubmenu3 != 0) {

@@ -3,21 +3,24 @@
 #include <sstream>
 #include <string>
 #include <iomanip>
-
+#include "Mascota.h"
 using namespace std; 
+
+class Mascota;
+
 class Matrix
 {
 private:
 	int * filas; 
 	int * columnas; 
 	int * horasOcupadas; 
-	string*** matriz;
+	Mascota*** matriz;
 public:
 	Matrix(); 
-	void ingresarCita(int vec[], string); 
-	void eliminarCita(string);
-	string * buscarHoraEspecifica(int, int); 
-	string* buscarNombreEspecifico(string,int &count);
+	string * ingresarCita(int vec[], string*); 
+	 string * eliminarCita(int dia, int hora,string*);
+	bool * BuscarPropietarioXMascota(string*); 
+	string* buscarNombreEspecifico(string *);
 	string * pintarMatriz();
 	virtual ~Matrix(); 
 };

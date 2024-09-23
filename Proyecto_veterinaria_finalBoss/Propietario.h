@@ -4,22 +4,18 @@
 #include <sstream>
 #include <string>
 
-using namespace std; 
-class Doctor; 
+using namespace std;	
 
 class Propietario
 {
 private: 
 	string* id; 
 	string* nombre;
-	Doctor* doc;
 public: 
 	Propietario();
-	Propietario(string*, string*, Doctor*); 
+	Propietario(string*, string*); 
 	void setID(string*);
 	void setNombre(string*);
-	void setDoctor(Doctor*);
-	Doctor* getDoc();
 	string* getID();
 	string* getNombre();
 	string* toString();

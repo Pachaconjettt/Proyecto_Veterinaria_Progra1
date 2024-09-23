@@ -8,87 +8,100 @@ Matrix::Matrix() {
     columnas = new int(6);
     filas = new int(12);
     horasOcupadas = new int(0);
-    matriz = new std::string * *[*columnas];
+    matriz = new Mascota * *[*columnas];
     for (int i = 0; i < *columnas; i++) {
-        matriz[i] = new std::string * [*filas];
+        matriz[i] = new Mascota * [*filas];
         for (int j = 0; j < *filas; j++) {
-            matriz[i][j] = new std::string("Disponible");
+           matriz[i][j] = new Mascota();
         }
     }
 }
 
-void Matrix::ingresarCita(int vec[], std::string paciente) {
+string* Matrix::ingresarCita(int vec[], string* paciente) {
+    stringstream s;
     int dia = vec[1];
     int hora = vec[0];
     if (hora < 8 || hora > 19 || dia < 0 || dia >= *columnas) {
-        std::cout << "Curso no pudo ser ingresado. Dia o hora incorrectos.....\n";
-    }
-    else if (*matriz[dia][hora - 8] != "Disponible") {
-        std::cout << "Cita no pudo ser ingresada. Hora ya ocupada......\n";
+        s << "Curso no pudo ser ingresado. Dia o hora incorrectos.....\n";
     }
     else {
-        *matriz[dia][hora - 8] = paciente;
+        *matriz[dia][hora - 8]->getNombre() = *paciente;
         (*horasOcupadas)++;
-        std::cout << "Cita ingresada exitosamente. \n";
+        s << "Cita ingresada exitosamente. \n";
     }
+    return new string(s.str());
 }
 
-void Matrix::eliminarCita(std::string paciente) {
-    for (int i = 0; i < *columnas; i++) {
-        for (int j = 0; j < *filas; j++) {
-            if (*matriz[i][j] == paciente) {
-                *matriz[i][j] = "Disponible";
+
+string* Matrix::eliminarCita(int dia, int hora, string* paciente) {
+    stringstream s;
+    if (dia < 0 || dia >= *columnas || hora < 8 || hora > 19) {
+        s << "Dia o hora incorrectos." << endl;
+    }
+
+    int horaIndex = hora - 8;
+    if (*matriz[dia][horaIndex]->getNombre() == *paciente) {
+        delete matriz[dia][horaIndex];
+        matriz[dia][horaIndex] = new Mascota();
+        (*horasOcupadas)--;
+        s << "Cita eliminada exitosamente." << endl;
+    }
+    else {
+        s << "No se encontró una cita para la mascota en la hora y día especificados." << endl;
+    }
+    return new string(s.str());
+}
+    bool* Matrix::BuscarPropietarioXMascota(string * matrix) {
+        for (int i = 0; i < *columnas; i++) {
+            for (int j = 0; j < *filas; j++) {
+                if (*(matriz[i][j]->getPropietario()->getID()) == *(matrix)) {
+                    return new bool(true);
+            }
+            }
+            }
+            return new bool(false); 
+            }
+
+    string * Matrix::buscarNombreEspecifico(string* nueva) {
+        stringstream citas;
+        string dias[] = { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" };
+
+        for (int i = 0; i < *columnas; i++) {
+            for (int j = 0; j < *filas; j++) {
+                if (*matriz[i][j]->getNombre() == *nueva) {
+                    int horaReal = j + 8;
+                    citas << dias[i] << " a las " << horaReal << ":00\n";
+                }
             }
         }
+        return new string(citas.str());
     }
-}
 
-std::string* Matrix::buscarHoraEspecifica(int hora, int dia) {
-    return matriz[dia][hora - 8];
-}
-
-std::string* Matrix::buscarNombreEspecifico(std::string nombre, int& count) {
-    count = 0;
-    std::string* citas = new std::string[*columnas * *filas];
-    std::string dias[] = { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" };
-
-    for (int i = 0; i < *columnas; i++) {
-        for (int j = 0; j < *filas; j++) {
-            if (*matriz[i][j] == nombre) {
-                int horaReal = j + 8;
-                citas[count] = dias[i] + " a las " + std::to_string(horaReal) + ":00";
-                count++;
-            }
-        }
-    }
-    return citas;
-}
-
-std::string* Matrix::pintarMatriz() {
-    std::stringstream t;
-    std::string dias[] = { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" };
-    int ancho_columnas = 12; // Ancho fijo cada columna es decir de 8 a 19
+    string* Matrix::pintarMatriz() {
+    stringstream t;
+    string dias[] = { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" };
+    int ancho_columnas = 12; 
     int longitud_total = (ancho_columnas * *columnas) + (*columnas + 18);
-    t << " Hora  |  " << std::setw(ancho_columnas) << std::left << dias[0]
-        << "|  " << std::setw(ancho_columnas) << std::left << dias[1]
-        << "|  " << std::setw(ancho_columnas) << std::left << dias[2]
-        << "|  " << std::setw(ancho_columnas) << std::left << dias[3]
-        << "|  " << std::setw(ancho_columnas) << std::left << dias[4]
-        << "|  " << std::setw(ancho_columnas) << std::left << dias[5] << "|\n";
+    t << " Hora  |  " << setw(ancho_columnas) << left << dias[0]
+        << "|  " << setw(ancho_columnas) << left << dias[1]
+        << "|  " << setw(ancho_columnas) << left << dias[2]
+        << "|  " << setw(ancho_columnas) << left << dias[3]
+        << "|  " << setw(ancho_columnas) << left << dias[4]
+        << "|  " << setw(ancho_columnas) << left << dias[5] << "|\n";
 
-    t << std::string(longitud_total, '-') << std::endl;
+    t << string(longitud_total, '-') << endl;
 
     for (int hora = 0; hora < *filas; hora++) {
         int horaReal = hora + 8;
         t << (horaReal < 10 ? " " : "") << horaReal << ":00  |";
 
         for (int dia = 0; dia < *columnas; dia++) {
-            t << "  " << std::setw(ancho_columnas) << std::left << *matriz[dia][hora] << "|";
+            t << "  " << setw(ancho_columnas) << left << *matriz[dia][hora]->getNombre() << "|";
         }
-        t << std::endl;
-        t << std::string(longitud_total, '-') << std::endl;
+        t << endl;
+        t << string(longitud_total, '-') << endl;
     }
-    return new std::string(t.str());
+    return new string(t.str());
 }
 
 Matrix::~Matrix() {

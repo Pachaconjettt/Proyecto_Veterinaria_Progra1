@@ -62,11 +62,33 @@ string* DoctorLista::HorarioDeDoctor(Doctor* nuevo) {
 void DoctorLista::ingresarHoraCita(int vec[], string* nombre, Doctor* nuevo) {
     for (int i = 0; i < *cantidad; i++) {
         if (*(vector[i]->getID()) == *(nuevo->getID())) {
-            vector[i]->ingresarCita(vec, *nombre);
+            vector[i]->ingresarCita(vec, nombre);
         }
     }
 }
-
+void DoctorLista::eliminarCita(int dia, int hora, string* nombre,  Doctor* nuevo) {
+    for (int i = 0; i < *cantidad; i++) {
+        if (*(vector[i]->getID()) == *(nuevo->getID())) {
+            vector[i]->eliminarCita(dia, hora, nombre); 
+        }
+        }
+}
+string *DoctorLista::BuscarNombreEspecifico(string* nombre) {
+        stringstream s;
+        for (int i = 0; i <*cantidad; i++) {
+            s << *vector[i]->BuscarNombreEspecifico(nombre) << endl;
+        }
+        return new string(s.str());
+    }
+string* DoctorLista::ListaDoctoresXIdCita(string* pepe) {
+    stringstream s; 
+    for (int i = 0; i < *cantidad; i++) {
+        if (vector[i]->getMatrix()->BuscarPropietarioXMascota(pepe) != nullptr) {
+            s << *(vector[i]->toString()) << endl; 
+        }
+        }
+    return new string(s.str());
+}
 string* DoctorLista::RetornoDoctor() {
     stringstream s;
     for (int i = 0; i < *cantidad; i++) {

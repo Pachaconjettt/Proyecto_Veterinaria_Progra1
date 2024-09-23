@@ -3,12 +3,10 @@
 Propietario::Propietario(){
 	this->nombre = new string("indef");		
 	this->id = new string("indef");
-	this->doc = new Doctor();
 }
-Propietario::Propietario(string* nombre, string* id,Doctor* doc){
+Propietario::Propietario(string* nombre, string* id){
 	this->setNombre(nombre);
 	this->setID(id);
-	this->setDoctor(doc);
 }
 void Propietario::setID(string* id) {
 	if (this->id) {
@@ -22,13 +20,6 @@ void Propietario::setNombre(string* nombre){
 }
 	this->nombre = nombre;
 }
-void Propietario::setDoctor(Doctor* doctorc) {
-	if (this->doc) {
-		delete this->doc; 
-}
-	this->doc = doctorc;
-}
-Doctor* Propietario::getDoc() { return this->doc; }
 string* Propietario::getID() { return this->id; }
 string* Propietario::getNombre() { return this->nombre; }
 string* Propietario::toString(){
