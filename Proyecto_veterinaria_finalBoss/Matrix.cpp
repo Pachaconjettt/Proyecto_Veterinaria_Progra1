@@ -16,7 +16,7 @@ Matrix::Matrix() {
         }
     }
 }
-
+    
 string* Matrix::ingresarCita(int vec[], string* paciente) {
     stringstream s;
     int dia = vec[1];

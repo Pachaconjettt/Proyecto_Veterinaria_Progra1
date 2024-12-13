@@ -104,14 +104,27 @@ void Interfaz::opcion2_1(){
 	string* id = new string(" ");
 	string* Idirector = new string(" ");
 	cout << "------------------(2) Ingresar Doctor -----------------------------" << endl;
-	cout << "Nombre de doctor" << endl;
+	cout << "Nombre del doctor :" << endl;
 	cin >> *nombre;
-	cout << "ID del doctor " << endl;
+	cout << "ID del doctor :" << endl;
 	cin >> *id;
-	cout << "Ingresa nombre de especialidad " << endl;
-	cin >> *Idirector;
+	cout << "Especialidades disponibles : \n";
+	cout << *EspeciLista->RetornoEspecialidad() << endl;
+	cout << endl;
+	Especialidad* especialidad = nullptr;
+	while (especialidad == nullptr) {
+		cout << "Ingresa nombre de especialidad :" << endl;
+		cin >> *Idirector;
+		especialidad = EspeciLista->buscarEspecialidad(Idirector);
+		if(especialidad == nullptr)
+			cout << "Especialidad no encontrada. Por favor, intente de nuevo." << endl;
+		else
+			cout << "Especialidad ingresada correctamente...." << endl;
+		cin.get();
+		cin.get();
+	}
 	Matrix* horario = new Matrix();
-	Doctor* doctorUI = new Doctor(new string(*nombre), new string(*id), EspeciLista->buscarEspecialidad(Idirector), horario);
+	Doctor* doctorUI = new Doctor(new string(*nombre), new string(*id), especialidad, horario);
 	DocLista->AgregarDoctor(doctorUI);
 	delete nombre;
 	delete id;
@@ -158,9 +171,21 @@ void Interfaz::opcion4_1(){
 	cin >> *nombre; 
 	cout << "Ingrese que animal es :" << endl;
 	cin >> *animal;
-	cout << "Ingrese el id del duennio :" << endl;
-	cin >> *idPropietario;
-	Mascota* MascotaUI = new Mascota(new string(*nombre), new string(*animal), PropiLista->BuscarPropietario(idPropietario));
+	cout << endl;
+	cout << *PropiLista->RetornoListaPropietario() << endl;
+	Propietario* propietario = nullptr;
+	while (propietario == nullptr) {
+		cout << "Ingresa el id del duennio de la mascota" << endl;
+		cin >> *idPropietario;
+		propietario = PropiLista->BuscarPropietario(idPropietario);
+		if (propietario == nullptr)
+			cout << "Propietario no encontrado. Por favor,intenta de nuevo..." << endl;
+		else
+			cout << "Propietario encontrado con exito..." << endl;
+		cin.get();
+		cin.get();
+	}
+	Mascota* MascotaUI = new Mascota(new string(*nombre), new string(*animal), propietario);
 	MascLista->AgregarMascota(MascotaUI);
 	delete nombre;
 	delete animal;
@@ -216,6 +241,8 @@ void Interfaz::opcion1_2() {
 	string* IdDoctor = new string(" ");
 	int vec[2];
 	cout << "-----------------------SACAR CITA---------------------" << endl;
+	cout << "\n" << *PropiLista->RetornoListaPropietario() << endl;
+	pro
 	cout << "Ingrese el id del duennio de las mascota/s :" << endl;
 	cin >> *id;
 	Propietario* propietario = PropiLista->BuscarPropietario(id);
@@ -239,7 +266,7 @@ void Interfaz::opcion1_2() {
 	DocLista->ingresarHoraCita(vec, MascLista->buscarMascota(nombre)->getNombre(), DocLista->buscarDoctor(IdDoctor));
 	cout << endl;
 	cout << *(DocLista->HorarioDeDoctor(DocLista->buscarDoctor(IdDoctor))) << endl;
-	cin.get();
+	cin.get();	
 	cin.get();
 
 	delete id;
