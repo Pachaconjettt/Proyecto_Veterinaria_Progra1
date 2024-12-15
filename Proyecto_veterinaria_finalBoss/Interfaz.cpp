@@ -242,10 +242,16 @@ void Interfaz::opcion1_2() {
 	int vec[2];
 	cout << "-----------------------SACAR CITA---------------------" << endl;
 	cout << "\n" << *PropiLista->RetornoListaPropietario() << endl;
-	pro
-	cout << "Ingrese el id del duennio de las mascota/s :" << endl;
-	cin >> *id;
-	Propietario* propietario = PropiLista->BuscarPropietario(id);
+	Propietario* propietario = nullptr;
+	while (propietario == nullptr) {
+		cout << "Ingrese el id del duennio de la/s mascota/s :" << endl; 
+		cin >> *id;
+		propietario = PropiLista->BuscarPropietario(id); 
+		if (propietario == nullptr) 
+		{
+			cout << "Propietario no encontrado. Por favor, intente de nuevo...." << endl;
+		}
+	}
 	cout << *(MascLista->ListasDeMascotaDe(propietario)) << endl;
 	cout << "Cual mascota quiere elegir :" << endl;
 	cin >> *nombre;
