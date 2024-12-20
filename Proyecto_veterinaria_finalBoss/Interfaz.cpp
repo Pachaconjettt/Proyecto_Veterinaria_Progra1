@@ -7,16 +7,24 @@ Interfaz::Interfaz(){
 }
 
 void Interfaz::Menu() {
-	int opcion = 1; 
+	cout << "**********************************************" << endl;
+	cout << "* Bienvenido a la Interfaz de la Veterinaria *" << endl;
+	cout << "**********************************************" << endl;
+	cout << "Presione enter para empezar......." << endl;
+	cin.get();
+	system("cls");
+	int opcion = 1;
 	while (opcion != 0) {
-		cout << "---------------MENU PRINICIPAL--------------" << endl; 
-		cout << "(1) Submenu Administracion " << endl; 
-		cout << "(2) Submenu Control de Citas" << endl;
-		cout << "(3) Submenu Busquedas y Listados" << endl;
-		cout << "(0) Salir " << endl << endl; 
-		cout << "---------------------------------------------" << endl; 
-		cout << "Digite una opcion del menu :"; 
-		cin >> opcion; 
+		cout << "*********************************************" << endl;
+		cout << "*               MENU PRINCIPAL              *" << endl;
+		cout << "*********************************************" << endl;
+		cout << "* (1) Submenu Administracion                *" << endl;
+		cout << "* (2) Submenu Control de Citas              *" << endl;
+		cout << "* (3) Submenu Busquedas y Listados          *" << endl;
+		cout << "* (0) Salir                                 *" << endl;
+		cout << "*********************************************" << endl;
+		cout << "Digite una opcion del menu: ";
+		cin >> opcion;
 		switch (opcion) {
 		case 1: 
 			system("cls");
@@ -175,7 +183,7 @@ void Interfaz::opcion4_1(){
 	cout << *PropiLista->RetornoListaPropietario() << endl;
 	Propietario* propietario = nullptr;
 	while (propietario == nullptr) {
-		cout << "Ingresa el id del duennio de la mascota" << endl;
+		cout << "Ingresa el id del duennio de la mascota :" << endl;
 		cin >> *idPropietario;
 		propietario = PropiLista->BuscarPropietario(idPropietario);
 		if (propietario == nullptr)
@@ -241,25 +249,63 @@ void Interfaz::opcion1_2() {
 	string* IdDoctor = new string(" ");
 	int vec[2];
 	cout << "-----------------------SACAR CITA---------------------" << endl;
+	//Preguntar por el propietario....
 	cout << "\n" << *PropiLista->RetornoListaPropietario() << endl;
 	Propietario* propietario = nullptr;
 	while (propietario == nullptr) {
 		cout << "Ingrese el id del duennio de la/s mascota/s :" << endl; 
 		cin >> *id;
 		propietario = PropiLista->BuscarPropietario(id); 
-		if (propietario == nullptr) 
+		if (propietario == nullptr)
 		{
 			cout << "Propietario no encontrado. Por favor, intente de nuevo...." << endl;
 		}
+		else
+			cout << "Propietario encontrado con exito!!!" << endl; 
+		cin.get();
 	}
+//Preguntar sobre que mascota escoger....
 	cout << *(MascLista->ListasDeMascotaDe(propietario)) << endl;
-	cout << "Cual mascota quiere elegir :" << endl;
-	cin >> *nombre;
-	cout << "Ingrese el nombre de la especialidad deseada " << endl;
-	cin >> *nombreEspeci;
-	cout << *(DocLista->ListaDoctoresEspecialidad(EspeciLista->buscarEspecialidad(nombreEspeci))) << endl;
-	cout << "Ingrese el id del doctor al que le gustaria ser atendido :" << endl;
-	cin >> *IdDoctor;
+	Mascota* mascota = nullptr; 
+	while (mascota == nullptr) {
+		cout << "¿Cual mascota quiere elegir? " << endl; 
+		cin >> *nombre;
+		mascota = MascLista->buscarMascota(nombre);
+		if (mascota == nullptr) {
+			cout << "Mascota no encontrada. Por favor, intente de nuevo...." << endl;
+		}
+		else
+			cout << "Mascota encontrada con exito!!! " << endl <<endl; 
+		cin.get();
+	}
+	Especialidad* especialidad = nullptr;
+	while (especialidad == nullptr) {
+		cout << *EspeciLista->RetornoEspecialidad() << endl;
+		cout << endl << "Ingrese el nombre de la especialidad deseada :" << endl; 
+		cin >> *nombreEspeci;
+		especialidad = EspeciLista->buscarEspecialidad(nombreEspeci); 
+		if (especialidad == nullptr) {
+			cout << "Especialidad no encontrada. Por favor, intente de nuevo...." << endl;
+		}
+		else
+			cout << "Especialidad encontrada con exito !!!" << endl;
+		cin.get(); 
+	}
+//Preguntar sobre el doctor....
+	Doctor* doctor = nullptr; 
+	while (doctor == nullptr) {
+		cout << *(DocLista->ListaDoctoresEspecialidad(especialidad)) << endl;
+		cout << "Ingrese el id del doctor al que le gustaria que fuera atendido : " << endl; 
+		cin >> *IdDoctor; 
+		doctor = DocLista->buscarDoctor(IdDoctor); 
+		if (doctor == nullptr) {
+			cout << "El id del doctor que ingreso es invalido. Por favor ingrese uno correcto..." << endl;
+		}
+		else
+			cout << "Se ha ingresado correctamente el id del doctor..." << endl;
+		cin.get();
+	}
+// Horario del doctor y otras cosas....
 	cout << "HORARIO DEL DOCTOR SELECCIONADO :" << endl;
 	cout << endl;
 	cout << *(DocLista->HorarioDeDoctor(DocLista->buscarDoctor(IdDoctor))) << endl;
@@ -269,9 +315,9 @@ void Interfaz::opcion1_2() {
 	cin >> vec[0];
 	cout << "Ingrese el dia (0-5, donde 0 es Lunes y 5 es sabado) :" << endl;
 	cin >> vec[1];
-	DocLista->ingresarHoraCita(vec, MascLista->buscarMascota(nombre)->getNombre(), DocLista->buscarDoctor(IdDoctor));
+	DocLista->ingresarHoraCita(vec, mascota->getNombre(), doctor);
 	cout << endl;
-	cout << *(DocLista->HorarioDeDoctor(DocLista->buscarDoctor(IdDoctor))) << endl;
+	cout << *(DocLista->HorarioDeDoctor(doctor)) << endl;
 	cin.get();	
 	cin.get();
 
@@ -289,23 +335,55 @@ void Interfaz::opcion2_2() {
 	int dia;
 	int hora;
 	cout << "-------------------CANCELAR CITA----------------------" << endl;
-	cout << "Ingrese el id del duennio :" << endl;
-	cin >> *idDuennio;
-	cout << "Doctores con los que tiene cita :" << endl; 
-	cout << *(DocLista->ListaDoctoresXIdCita(idDuennio)) << endl; 
-	cout << "Ingrese el id doctor que quiere cancelar la cita : " << endl; 
-	cin >> *idDoctor; 
-	cout << *(DocLista->HorarioDeDoctor(DocLista->buscarDoctor(idDoctor))) << endl;
-	cout << "Digite el nombre de la mascota : " << endl;
-	cin >> *masct;
+	// Preguntar acerca de que propietario quiere que cancele la cita...
+	cout << "Duennios guardados en el sistema :" << endl; 
+	cout << *PropiLista->RetornoListaPropietario() << endl;
+	Propietario* propietario = nullptr;
+	while (propietario == nullptr) {
+		cout << "Ingrese el id del duennio que tiene la cita :" << endl; 
+		cin >> *idDuennio;
+		propietario = PropiLista->BuscarPropietario(idDuennio);
+		if (propietario == nullptr)
+			cout << "Propietario no encontrado en el sistema. Por favor ingrese uno valido...." << endl;
+		else
+			cout << "Propietario ingresado correctamente...." << endl; 
+		cin.get();
+	}
+	// Validar el id del mr doctor
+	Doctor* doc = nullptr; 
+	while (doc == nullptr) {
+		cout << "Doctores con los que tiene cita :" << endl;
+		cout << *(DocLista->ListaDoctoresXIdCita(idDuennio)) << endl;
+		cout << "Ingrese el id del doctor con el que quiere cancelar cita..." << endl; 
+		cin >> *idDoctor; 
+		doc = DocLista->buscarDoctor(idDoctor);
+		if (doc == nullptr)
+			cout << "Doctor no encontrado. Ingrese uno valido...." << endl;
+		else
+			cout << "Doctor encontrado con exito!!!" << endl; 
+		cin.get();
+	}
+	Mascota* mascota = nullptr; 
+	while (mascota == nullptr) {
+		cout << MascLista->ListasDeMascotaDe(propietario) << endl;
+		cout << "Digite el nombre de la mascota que quiere cancelar la cita :" << endl; 
+		cin >> *masct; 
+		mascota = MascLista->buscarMascota(masct); 
+		if (mascota == nullptr)
+			cout << "Mascota no encontrada con exito. Por favor digite uno valido..." << endl;
+		else
+			cout << "Mascota encontrada con exito!!!" << endl; 
+		cin.get(); 
+	}
+	cout << *(DocLista->HorarioDeDoctor(doc)) << endl;
 	cout << "Ingrese el dia que quiere quitar la mascota(Recordar que Lunes es 0 y Domingo es 5) :" << endl;
 	cin >> dia; 
 	cout << "Ingrese la hora del dia que quiere quitar (Formato 24hrs ): " << endl;
 	cin >> hora; 
-	DocLista->eliminarCita(dia, hora, masct, DocLista->buscarDoctor(idDoctor));
+	DocLista->eliminarCita(dia, hora, masct, doc);
 	cout << "Horario actualizado del doctor :" << endl; 
 	cout << endl;
-	cout << *(DocLista->HorarioDeDoctor(DocLista->buscarDoctor(idDoctor))) << endl;
+	cout << *(DocLista->HorarioDeDoctor(doc)) << endl;
 	cin.get();
 	cin.get();
 }
@@ -313,10 +391,20 @@ void Interfaz::opcion2_2() {
 void Interfaz::opcion3_2() {
 	string* nombre = new string(" ");
 	cout << "---------------- MOSTRAR CALENDARIO DE CITAS POR DOCTOR -------------------" << endl;
-	cout << "Ingrese el id del doctor para saber el calendario de este mismo :" << endl;
-	cin >> *nombre; 
-	cout << "Horario del doctor solicitado :" << endl;
-	cout << endl;
+	Doctor* doctor = nullptr; 
+	cout << DocLista->RetornoDoctor() << endl; 
+	while (doctor == nullptr) {
+		cout << "Ingrese el id del doctor para saber el calendario de este mismo :" << endl;
+		cin >> *nombre;
+		doctor = DocLista->buscarDoctor(nombre);
+		if (doctor == nullptr) {
+			cout << "Doctor no encontrado. Por favor ingrese uno valido...." << endl;
+		}
+		else
+			cout << "Doctor encontrado con exito!!!" << endl; 
+		cin.get();
+	}
+	cout << "Horario del doctor seleccionado durante la semana...." << endl;
 	cout << *(DocLista->HorarioDeDoctor(DocLista->buscarDoctor(nombre))) << endl;
 	cin.get();
 	cin.get();
@@ -325,14 +413,27 @@ void Interfaz::opcion4_2() {
 	string* nombre = new string(" ");
 	string* mascotaName = new string(" ");
 	cout << "----------------- MOSTRAR CITAS POR PROPIETARIO ---------------" << endl;
-	cout << "Ingrese el id del propietario :" << endl;
-	cin >> *nombre;
+	cout << *PropiLista->RetornoListaPropietario() << endl;
+	Propietario* propietario = nullptr;
+	while (propietario == nullptr) {
+		cout << "Ingrese el id del propietario que desea ver las citas que tiene :" << endl;
+		cin >> *nombre; 
+		propietario = PropiLista->BuscarPropietario(nombre);
+		if (propietario == nullptr)
+			cout << "Propietario no encontrado. Por favor ingrese uno valido..." << endl;
+		else
+			cout << "Propietario encontrado con exito..." << endl;
+		cin.get();
+	}
 	cout << "Lista de mascotas del propietario :" << endl;
 	cout << endl;
+	Mascota* mascota = nullptr; 
 	cout << *MascLista->ListasDeMascotaDe(PropiLista->BuscarPropietario(nombre)) << endl;
-	cout << "Escriba el nombre de la mascota( A como esta en el sistema es decir sin agregar mayusculas o algun cambio pequenio) :" << endl;
-	cin >> *mascotaName;
-	cout << endl;
+	while (mascota == nullptr) {
+		cout << "Escriba el nombre de la mascota( A como esta en el sistema es decir sin agregar mayusculas o algun cambio pequenio) :" << endl;
+		cin >> *mascotaName;
+		mascota = MascLista->buscarMascota(mascotaName);
+	}
 	cout << "Citas que tiene la mascota :" << endl;
 	cout << endl; 
 	cout << *DocLista->BuscarNombreEspecifico(mascotaName) << endl; 
