@@ -59,7 +59,7 @@ string* DoctorLista::HorarioDeDoctor(Doctor* nuevo) {
     return new string(s.str());
 }
 
-void DoctorLista::ingresarHoraCita(int vec[], string* nombre, Doctor* nuevo) {
+void DoctorLista::ingresarHoraCita(int vec[], Mascota * nombre, Doctor* nuevo) {
     for (int i = 0; i < *cantidad; i++) {
         if (*(vector[i]->getID()) == *(nuevo->getID())) {
             vector[i]->ingresarCita(vec, nombre);
@@ -96,7 +96,6 @@ string* DoctorLista::RetornoDoctor() {
     }
     return new string(s.str());
 }
-
 DoctorLista::~DoctorLista() {
     for (int i = 0; i < *cantidad; i++) {
         delete vector[i];

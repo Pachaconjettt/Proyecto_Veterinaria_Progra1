@@ -16,7 +16,7 @@ public:
 	DoctorLista(int*); 
 	Doctor* buscarDoctor(string*);
 	bool AgregarDoctor(Doctor* );
-	void ingresarHoraCita(int vec[], string * , Doctor *);
+	void ingresarHoraCita(int vec[], Mascota * , Doctor *);
 	void eliminarCita(int dia, int hora, string*, Doctor*); 
 	string* BuscarNombreEspecifico(string*);
 	string* ListaDoctoresEspecialidad(Especialidad*); 

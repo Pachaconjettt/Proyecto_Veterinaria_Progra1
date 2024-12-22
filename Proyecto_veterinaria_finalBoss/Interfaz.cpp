@@ -315,7 +315,7 @@ void Interfaz::opcion1_2() {
 	cin >> vec[0];
 	cout << "Ingrese el dia (0-5, donde 0 es Lunes y 5 es sabado) :" << endl;
 	cin >> vec[1];
-	DocLista->ingresarHoraCita(vec, mascota->getNombre(), doctor);
+	DocLista->ingresarHoraCita(vec, mascota, doctor);
 	cout << endl;
 	cout << *(DocLista->HorarioDeDoctor(doctor)) << endl;
 	cin.get();	
@@ -352,7 +352,7 @@ void Interfaz::opcion2_2() {
 	// Validar el id del mr doctor
 	Doctor* doc = nullptr; 
 	while (doc == nullptr) {
-		cout << "Doctores con los que tiene cita :" << endl;
+		cout << " Marque el doctor con el que tiene cita :" << endl;
 		cout << *(DocLista->ListaDoctoresXIdCita(idDuennio)) << endl;
 		cout << "Ingrese el id del doctor con el que quiere cancelar cita..." << endl; 
 		cin >> *idDoctor; 
@@ -365,7 +365,7 @@ void Interfaz::opcion2_2() {
 	}
 	Mascota* mascota = nullptr; 
 	while (mascota == nullptr) {
-		cout << MascLista->ListasDeMascotaDe(propietario) << endl;
+		cout << *MascLista->ListasDeMascotaDe(propietario) << endl;
 		cout << "Digite el nombre de la mascota que quiere cancelar la cita :" << endl; 
 		cin >> *masct; 
 		mascota = MascLista->buscarMascota(masct); 
@@ -392,7 +392,7 @@ void Interfaz::opcion3_2() {
 	string* nombre = new string(" ");
 	cout << "---------------- MOSTRAR CALENDARIO DE CITAS POR DOCTOR -------------------" << endl;
 	Doctor* doctor = nullptr; 
-	cout << DocLista->RetornoDoctor() << endl; 
+	cout << *DocLista->RetornoDoctor() << endl; 
 	while (doctor == nullptr) {
 		cout << "Ingrese el id del doctor para saber el calendario de este mismo :" << endl;
 		cin >> *nombre;
@@ -406,8 +406,7 @@ void Interfaz::opcion3_2() {
 	}
 	cout << "Horario del doctor seleccionado durante la semana...." << endl;
 	cout << *(DocLista->HorarioDeDoctor(DocLista->buscarDoctor(nombre))) << endl;
-	cin.get();
-	cin.get();
+	cin.get();	
 }
 void Interfaz::opcion4_2() {
 	string* nombre = new string(" ");
@@ -442,7 +441,7 @@ void Interfaz::opcion4_2() {
 	delete mascotaName;
 	cin.get();
 	cin.get();
-}
+}	
 
 void Interfaz::SubmenuBusqueda() {
 	int opcionSubmenu3 = 1; 

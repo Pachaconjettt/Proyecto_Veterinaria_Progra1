@@ -12,12 +12,12 @@ Matrix::Matrix() {
     for (int i = 0; i < *columnas; i++) {
         matriz[i] = new Mascota * [*filas];
         for (int j = 0; j < *filas; j++) {
-           matriz[i][j] = new Mascota();
+            matriz[i][j] = new Mascota();
         }
     }
 }
-    
-string* Matrix::ingresarCita(int vec[], string* paciente) {
+
+string* Matrix::ingresarCita(int vec[], Mascota* paciente) {
     stringstream s;
     int dia = vec[1];
     int hora = vec[0];
@@ -25,7 +25,7 @@ string* Matrix::ingresarCita(int vec[], string* paciente) {
         s << "Curso no pudo ser ingresado. Dia o hora incorrectos.....\n";
     }
     else {
-        *matriz[dia][hora - 8]->getNombre() = *paciente;
+        *matriz[dia][hora - 8] = *paciente;
         (*horasOcupadas)++;
         s << "Cita ingresada exitosamente. \n";
     }
@@ -51,36 +51,36 @@ string* Matrix::eliminarCita(int dia, int hora, string* paciente) {
     }
     return new string(s.str());
 }
-    bool* Matrix::BuscarPropietarioXMascota(string * matrix) {
-        for (int i = 0; i < *columnas; i++) {
-            for (int j = 0; j < *filas; j++) {
-                if (*(matriz[i][j]->getPropietario()->getID()) == *(matrix)) {
-                    return new bool(true);
-            }
-            }
-            }
-            return new bool(false); 
-            }
-
-    string * Matrix::buscarNombreEspecifico(string* nueva) {
-        stringstream citas;
-        string dias[] = { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" };
-
-        for (int i = 0; i < *columnas; i++) {
-            for (int j = 0; j < *filas; j++) {
-                if (*matriz[i][j]->getNombre() == *nueva) {
-                    int horaReal = j + 8;
-                    citas << dias[i] << " a las " << horaReal << ":00\n";
-                }
+bool* Matrix::BuscarPropietarioXMascota(string* matrix) {
+    for (int i = 0; i < *columnas; i++) {
+        for (int j = 0; j < *filas; j++) {
+            if (*(matriz[i][j]->getPropietario()->getID()) == *(matrix)) {
+                return new bool(true);
             }
         }
-        return new string(citas.str());
     }
+    return new bool(false);
+}
 
-    string* Matrix::pintarMatriz() {
+string* Matrix::buscarNombreEspecifico(string* nueva) {
+    stringstream citas;
+    string dias[] = { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" };
+
+    for (int i = 0; i < *columnas; i++) {
+        for (int j = 0; j < *filas; j++) {
+            if (*matriz[i][j]->getNombre() == *nueva) {
+                int horaReal = j + 8;
+                citas << dias[i] << " a las " << horaReal << ":00\n";
+            }
+        }
+    }
+    return new string(citas.str());
+}
+
+string* Matrix::pintarMatriz() {
     stringstream t;
     string dias[] = { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" };
-    int ancho_columnas = 12; 
+    int ancho_columnas = 12;
     int longitud_total = (ancho_columnas * *columnas) + (*columnas + 18);
     t << " Hora  |  " << setw(ancho_columnas) << left << dias[0]
         << "|  " << setw(ancho_columnas) << left << dias[1]

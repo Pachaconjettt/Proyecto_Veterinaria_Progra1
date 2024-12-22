@@ -33,9 +33,9 @@ Matrix * Doctor::getMatrix(){return this->horario;}
 string* Doctor::getNombre() { return this->nombre; }
 string* Doctor::getID() { return this->id; }
 Especialidad* Doctor::getEspecialidad() { return this->especi; }
-void Doctor::ingresarCita(int vec[], string * paciente) {
+void Doctor::ingresarCita(int vec[], Mascota * paciente) {
 	if (horario) {
-	horario->ingresarCita(vec, paciente );
+	horario->ingresarCita(vec, paciente);
 	}
 }
 void Doctor::eliminarCita(int dia, int hora,string * paciente) {

@@ -17,7 +17,7 @@ private:
 	Mascota*** matriz;
 public:
 	Matrix(); 
-	string * ingresarCita(int vec[], string*); 
+	string * ingresarCita(int vec[], Mascota*); 
 	 string * eliminarCita(int dia, int hora,string*);
 	bool * BuscarPropietarioXMascota(string*); 
 	string* buscarNombreEspecifico(string *);
