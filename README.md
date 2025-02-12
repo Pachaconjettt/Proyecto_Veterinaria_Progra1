@@ -8,4 +8,5 @@ _¡Espero que sea de gran ayuda para el uso educativo del proyecto!_
 
 > Para aprender a triunfar primero tienes que aprender a fallar
 (Michael Jordan)
-![alt text](https://www.google.com/url?sa=i&url=https%3A%2F%2Fsteamcommunity.com%2Fsharedfiles%2Ffiledetails%2F%3Fid%3D2944308646&psig=AOvVaw2n-W8497paVEv1vfWt5-Fm&ust=1739436255440000&source=images&cd=vfe&opi=89978449&ved=0CBYQjRxqFwoTCOi545LfvYsDFQAAAAAdAAAAABAH)
+![alt text](![image](https://github.com/user-attachments/assets/91bf1844-6f8a-4995-9052-d0e6ed83cff3)
+)
