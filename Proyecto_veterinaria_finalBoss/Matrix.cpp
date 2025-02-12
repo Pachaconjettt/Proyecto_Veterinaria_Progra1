@@ -61,6 +61,18 @@ bool* Matrix::BuscarPropietarioXMascota(string* matrix) {
     }
     return new bool(false);
 }
+string* Matrix::imprimirPropietariosXDoctor() {
+    stringstream s; 
+    for (int i = 0; i < *columnas; i++) {
+        for (int j = 0; j < *filas; j++) {
+            if (*matriz[i][j]->getNombre() != "Disponible") {
+                s << *(matriz[i][j]->toString()) << endl; 
+
+            }
+        }
+    }
+    return new string(s.str());
+}
 
 string* Matrix::buscarNombreEspecifico(string* nueva) {
     stringstream citas;

@@ -23,7 +23,7 @@ Especialidad* EspecialidadLista::buscarEspecialidad(string * nombre) {
 bool* EspecialidadLista::AgregarEspecialidad(Especialidad* nuevo) {
 	if (buscarEspecialidad(nuevo->getNombre()) == nullptr && *cantidad < *tamano) {
 		vector[*cantidad] = nuevo;
-		(*cantidad)++;
+		(*cantidad)++;	
 		return new bool(true);
 	}
 	return new bool(false); 

@@ -9,10 +9,12 @@ class Matrix;
 class Doctor
 {
 private:
+	
 	string* nombre;
 	string* id;
 	Especialidad* especi;
 	Matrix* horario;
+
 public:
 	Doctor();
 	Doctor(string*, string*, Especialidad*, Matrix*);
@@ -24,7 +26,7 @@ public:
 	Especialidad* getEspecialidad();
 	Matrix* getMatrix();
 	void ingresarCita(int vec[], Mascota *);
-	void eliminarCita(int dia, int hora, string * paciente);
+	void eliminarCita(int dia, int hora, string *);
 	string* BuscarNombreEspecifico(string*);
 	string* pintarMatrizDoctor(); 
 	string * toString(); 

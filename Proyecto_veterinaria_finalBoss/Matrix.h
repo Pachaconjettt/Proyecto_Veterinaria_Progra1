@@ -20,8 +20,9 @@ public:
 	string * ingresarCita(int vec[], Mascota*); 
 	 string * eliminarCita(int dia, int hora,string*);
 	bool * BuscarPropietarioXMascota(string*); 
+	string* imprimirPropietariosXDoctor();
 	string* buscarNombreEspecifico(string *);
-	string * pintarMatriz();
+	string * pintarMatriz();	
 	virtual ~Matrix(); 
 };
 

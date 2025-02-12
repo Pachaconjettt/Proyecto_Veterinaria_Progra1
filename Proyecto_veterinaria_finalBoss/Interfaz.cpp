@@ -485,25 +485,104 @@ void Interfaz::SubmenuBusqueda() {
 }
 void Interfaz::opcion1_3() {
 	cout << "---------------------------- Mostrar Especialidades Existentes ---------------------" << endl << endl;
-	cout << *(EspeciLista->RetornoEspecialidad()) << endl; 
+	if (*EspeciLista->RetornoEspecialidad() == "") {
+		cout << "No se ha encontrado especialidades....." << endl;
+	}
+	else 
+	{
+		cout << *EspeciLista->RetornoEspecialidad() << endl;
+	}
 	cin.get(); 
 	cin.get();
 }
 void Interfaz::opcion2_3() {
-	cout << "----------------------------- Mostrar Doctores Existentes -------------------------------" << endl << endl; 
-	cout << *(DocLista->RetornoDoctor()) << endl;
+	cout << "----------------------------- Mostrar Doctores Por Especialidad  -------------------------------" << endl << endl; 
+	if (*EspeciLista->RetornoEspecialidad() == "")
+	{
+		cout << "No hay especialidades registradas." << endl;
+	}
+	else
+	{
+		string* aux_especialidad = new string(" ");
+		Especialidad* especialidadUI = nullptr; 
+		cout << *EspeciLista->RetornoEspecialidad() << endl;
+		cout << "Digite el nombre de una especialidad para ver sus doctores: " << endl;
+		cin >> *aux_especialidad; 
+
+		especialidadUI = EspeciLista->buscarEspecialidad(aux_especialidad);
+
+		while (especialidadUI == nullptr) { 
+			cout << "Ingrese una especialidad valida: " << endl;
+			cin >> *aux_especialidad; 
+			especialidadUI = EspeciLista->buscarEspecialidad(aux_especialidad); 
+		}
+		cout << "Doctores de la especialidad " << *aux_especialidad << ": " << endl; 
+		cout << *DocLista->ListaDoctoresEspecialidad(especialidadUI) << endl;
+
+		delete aux_especialidad; 
+	}
 	cin.get(); 
 	cin.get();
 }
 void Interfaz::opcion3_3() {
-	cout << "----------------------------- Mostrar Duennios Existentes ---------------------------------" << endl << endl;
-	cout << *(PropiLista->RetornoListaPropietario()) << endl;
+	cout << "----------------------------- Mostar Duennios con sus Mascotas  ---------------------------------" << endl << endl;
+	if (*PropiLista->RetornoListaPropietario() == "") {
+		cout << "No hay duennios existentes " << endl; 
+	}
+	string* id = new string(" ");
+	Propietario* duenioUi = nullptr;
+	cout << "Digite el id del duenio del cual quiera ver sus mascotas : " << endl;
+	cout << *PropiLista->RetornoListaPropietario() << endl; 
+	cin >> *id; 
+
+	duenioUi = PropiLista->BuscarPropietario(id);
+
+	while (duenioUi == nullptr) {
+		system("cls"); 
+		cout << "Id invalido. Intente de nuevo." << endl; 
+		cin >> *id; 
+		duenioUi = PropiLista->BuscarPropietario(id);
+	}
+	system("cls"); 
+	if (*MascLista->ListasDeMascotaDe(duenioUi) == "") {
+		cout << "El duenio no tiene mascotas registradas." << endl; 
+	}
+	else
+	{
+		cout << *MascLista->ListasDeMascotaDe(duenioUi) << endl; 
+	}
 	cin.get();
 	cin.get();
 }
 void Interfaz::opcion4_3() {
-	cout << "----------------------------- Mostrar Mascotas existentes ----------------------------------" << endl << endl;
-	cout << *(MascLista->RetornoMascotas()) << endl;
+	cout << "----------------------------- Mostrar Pacientes por Doctor ----------------------------------" << endl << endl;
+	if (*DocLista->RetornoDoctor() == "") {
+		cout << "No hay doctores registrados." << endl; 
+	}
+	else {
+		string * id = new string("");
+		Doctor* aux = nullptr; 
+		cout << *DocLista->RetornoDoctor() << endl;  
+		cout << "Digite el id del doctor del cual quiera ver sus pacientes: " << endl; 
+		cin >> *id; 
+
+		aux = DocLista->buscarDoctor(id);
+		while (aux == nullptr) {
+			system("cls"); 
+			cout << "Id invalido. Intente de nuevo..." << endl; 
+			cin >> *id; 
+			aux = DocLista->buscarDoctor(id); 
+		}
+		system("cls"); 
+		if (*aux->getMatrix()->imprimirPropietariosXDoctor() == "") {
+			cout << "El doctor no tiene pacientes." << endl; 
+		}
+		else {
+			cout << "Pacientes registrados (Mascotas que tiene el doctor) : " << endl; 
+			cout << *aux->getMatrix()->imprimirPropietariosXDoctor() << endl;
+		}
+		delete aux;
+	}
 	cin.get();
 	cin.get();
 }

@@ -20,14 +20,21 @@ Mascota* MascotaLista::buscarMascota(string* nombre) {
 	return nullptr;
 }
 string* MascotaLista::ListasDeMascotaDe(Propietario* duennio){
+	if (duennio == nullptr || duennio->getID() == nullptr) {
+		return new string("Propietario no válido.");
+	}
 	stringstream s;
+	bool found = false;
 	for (int i = 0; i < *cantidad; i++) {
-		if (*(vector[i]->getPropietario()->getID()) == *(duennio->getID())) {
-			s << *(vector[i]->toString()) << endl;
+		if (vector[i] != nullptr && vector[i]->getPropietario() != nullptr && vector[i]->getPropietario()->getID() != nullptr) {
+			if (*(vector[i]->getPropietario()->getID()) == *(duennio->getID())) {
+				s << *(vector[i]->toString()) << endl;
+				found = true;
+			}	
 		}
-		else {
-			s << "Ningun animal registrado bajo el ID de este propietario.." << endl; 
-		}
+	}
+	if (!found) {
+		s << "Ningun animal registrado bajo el ID de este propietario.." << endl;
 	}
 	return new string(s.str());
 }
@@ -39,11 +46,6 @@ bool* MascotaLista::AgregarMascota(Mascota* nuevo){
 }
 	return new bool(false);
 }
-//string* MascotaLista::ListaDoctoresPorId(Doctor * hola) {
-//	for (int i = 0; i < *cantidad; i++) {
-//		if(vector[i]->getDoctor()->getID())
-//	}
-//}
 string* MascotaLista::RetornoMascotas(){
 	stringstream s; 
 	for (int i = 0; i < *cantidad; i++) {
