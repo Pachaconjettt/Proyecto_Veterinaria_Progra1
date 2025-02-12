@@ -4,7 +4,7 @@
 
 En este proyecto se desarrollan el uso de las matrices, vectores más que todo
 
-# _¡Espero que sea de gran ayuda para el uso educativo del proyecto!_ 
+_¡Espero que sea de gran ayuda para el uso educativo del proyecto!_ 
 
 > Para aprender a triunfar primero tienes que aprender a fallar
 (Michael Jordan)
