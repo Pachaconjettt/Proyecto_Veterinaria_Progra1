@@ -1,4 +1,4 @@
-#Primer proyecto de Programacion 1 
+# Primer proyecto de Programacion 1 
 ## De la escuela de informatica de la Universidad Nacional de Costa Rica
 ### Proyecto subido al github con el fin de poder ayudar a otros estudiantes a comprender como es un ejemplo de un proyecto de programacion
 
